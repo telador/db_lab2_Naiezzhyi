@@ -32,16 +32,24 @@ with conn:
         x.append(row[0])
         y.append(row[1])
     plt.bar(x, y, width=0.1)
+    plt.title("time - followers correlation")
+    plt.xlabel("account age")
+    plt.ylabel("followers count")
     plt.show()
 
     print('\n2.')
     x = []
     y = []
+    t = 0
     cur.execute(query_2)
     for row in cur:
         x.append(row[0])
         y.append(row[1])
+        t += y[-1]
+    for i in range(len(x)):
+        x[i] = x[i] + "({}%)".format(round((100*y[i]/t),2))
     plt.pie(y, labels=x)
+    plt.title("user language distribution")
     plt.show()
 
     print('\n3.')
@@ -50,4 +58,7 @@ with conn:
     for row in cur:
         x.append(row[0])
     plt.bar(range(len(x)) ,x)
+    plt.title("user age at the moment of creating account")
+    plt.xlabel("user id")
+    plt.ylabel("age")
     plt.show()
